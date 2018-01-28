@@ -2,6 +2,7 @@ package cz.edee111.mortgagecalc.paying;
 
 import cz.edee111.mortgagecalc.model.Lending;
 import cz.edee111.mortgagecalc.payment.LendingPayment;
+import cz.edee111.mortgagecalc.util.Utils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,7 +18,12 @@ public class PayingContext {
   private BigDecimal amountLeft;
 
   public static PayingContext of(Lending lending) {
-    return new PayingContext(lending, lending.getAmount(), 0, lending.getStartMonth().withDayOfMonth(1));
+    return new PayingContext(
+        lending,
+        lending.getAmount(),
+        1,
+        lending.getStartMonth().withDayOfMonth(1)
+    );
   }
 
   private PayingContext(Lending lending, BigDecimal amountLeft, int order, LocalDate month) {
@@ -43,7 +49,9 @@ public class PayingContext {
     return month;
   }
 
-  public BigDecimal pay(BigDecimal amount) {
+  public BigDecimal pay(BigDecimal interestForMonth, BigDecimal amount) {
+    this.amountLeft = this.amountLeft.add(interestForMonth);
+
     BigDecimal actuallyPayedAmount;
     if (amountLeft.compareTo(amount) > 0) {
       actuallyPayedAmount = amount;
@@ -58,12 +66,13 @@ public class PayingContext {
   }
 
   public LendingPayment paySinglePayment() {
+    LendingPayment lendingPayment = this.lending.getPayingStrategy().makePayment(this);
     order++;
     month = month.plusMonths(1);
-    return this.lending.getPayingStrategy().makePayment(this);
+    return lendingPayment;
   }
 
   public boolean isFullyPayed() {
-    return this.amountLeft.equals(BigDecimal.ZERO);
+    return this.amountLeft.compareTo(BigDecimal.ZERO) <= 0;
   }
 }

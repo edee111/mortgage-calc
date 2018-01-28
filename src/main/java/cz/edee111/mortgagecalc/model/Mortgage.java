@@ -1,9 +1,9 @@
 package cz.edee111.mortgagecalc.model;
 
 import cz.edee111.mortgagecalc.paying.PayingStrategy;
+import cz.edee111.mortgagecalc.util.Utils;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 
 /**
@@ -53,9 +53,17 @@ public class Mortgage implements Lending {
     this.payingStrategy = payingStrategy;
   }
 
+  //see https://finance.idnes.cz/jak-si-spocitat-vysi-splatky-hypoteky-dhq-/pujcky.aspx?c=A061207_163959_fi_osobni_jjj
   @Override
   public BigDecimal getSinglePaymentAmount() {
-    return this.amount.multiply(interestRate).divide(BigDecimal.valueOf(fulfilmentMonths), RoundingMode.HALF_UP);
+    BigDecimal ipm = getInterestRate().divide(BigDecimal.valueOf(Utils.MONTHS_IN_YEAR), Utils.MC);
+    BigDecimal value = BigDecimal.ONE.add(ipm).pow(getFulfilmentMonths());
+
+    BigDecimal upper = getAmount().multiply(ipm).multiply(value);
+    BigDecimal lower = value.subtract(BigDecimal.ONE);
+
+
+    return upper.divide(lower, Utils.MC);
   }
 
   public void setStartMonth(LocalDate startMonth) {

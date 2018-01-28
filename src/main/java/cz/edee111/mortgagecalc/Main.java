@@ -16,11 +16,11 @@ public class Main {
 
   public static void main(String[] args) {
     Mortgage mortgage = new Mortgage();
-    mortgage.setAmount(BigDecimal.valueOf(4200000));
-    mortgage.setFulfilmentMonths(12 * 30);
-    mortgage.setInterestRate(BigDecimal.valueOf(1.8));
+    mortgage.setAmount(BigDecimal.valueOf(1000000));
+    mortgage.setFulfilmentMonths(12 * 15);
+    mortgage.setInterestRate(BigDecimal.valueOf(0.05));
     mortgage.setPayingStrategy(new MortgagePayingStrategy());
-    mortgage.setStartMonth(LocalDate.of(2018, 3 ,1));
+    mortgage.setStartMonth(LocalDate.of(2018, 1 ,1));
 
     List<LendingPayment> lendingPayments = new LendingService().calculatePayments(mortgage);
     for (LendingPayment p : lendingPayments) {
