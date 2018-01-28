@@ -11,18 +11,20 @@ import java.time.LocalDate;
  */
 public class PayingContext {
 
-  private int order = 0;
+  private int order;
   private LocalDate month;
   private Lending lending;
   private BigDecimal amountLeft;
 
   public static PayingContext of(Lending lending) {
-    return new PayingContext(lending, lending.getAmount());
+    return new PayingContext(lending, lending.getAmount(), 0, lending.getStartMonth().withDayOfMonth(1));
   }
 
-  private PayingContext(Lending lending, BigDecimal amountLeft) {
+  private PayingContext(Lending lending, BigDecimal amountLeft, int order, LocalDate month) {
     this.lending = lending;
     this.amountLeft = amountLeft;
+    this.order = order;
+    this.month = month;
   }
 
   public Lending getLending() {
@@ -42,7 +44,7 @@ public class PayingContext {
   }
 
   public BigDecimal pay(BigDecimal amount) {
-    BigDecimal actuallyPayedAmount = null;
+    BigDecimal actuallyPayedAmount;
     if (amountLeft.compareTo(amount) > 0) {
       actuallyPayedAmount = amount;
       this.amountLeft = this.amountLeft.subtract(amount);
@@ -56,6 +58,8 @@ public class PayingContext {
   }
 
   public LendingPayment paySinglePayment() {
+    order++;
+    month = month.plusMonths(1);
     return this.lending.getPayingStrategy().makePayment(this);
   }
 

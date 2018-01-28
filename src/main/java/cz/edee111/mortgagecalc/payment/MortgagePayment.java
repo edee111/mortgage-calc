@@ -49,4 +49,14 @@ public class MortgagePayment implements LendingPayment {
   public void setAmountLeft(BigDecimal amountLeft) {
     this.amountLeft = amountLeft;
   }
+
+  @Override
+  public String toString() {
+    return "MortgagePayment{" +
+        "order=" + order +
+        ",\tmonth=" + month +
+        ",\tamount=" + amount +
+        ",\tamountLeft=" + amountLeft +
+        '}';
+  }
 }
