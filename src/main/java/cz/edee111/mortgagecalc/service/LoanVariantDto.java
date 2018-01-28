@@ -21,8 +21,29 @@ public class LoanVariantDto {
   }
 
   public BigDecimal getTotalBorrowedAmount() {
-    return null;
+    return payments.values().stream()
+        .map(it -> it.get(0).getAmountLeftBefore())
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
   }
 
+  public BigDecimal getBorrowedAmountOf(String loanName) {
+    return payments.get(loanName).get(0).getAmountLeftBefore();
+  }
+
+  public BigDecimal getTotalPayedAmount() {
+    return payments.values().stream()
+        .map(it -> it.stream().map(LendingPayment::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add))
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
+  }
+
+  public BigDecimal getTotalInterest() {
+    return payments.values().stream()
+        .map(it -> it.stream().map(LendingPayment::getInterestAmount).reduce(BigDecimal.ZERO, BigDecimal::add))
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
+  }
+
+  public List<LendingPayment> getPayments(String loanName) {
+    return this.payments.get(loanName);
+  }
 
 }

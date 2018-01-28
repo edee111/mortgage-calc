@@ -18,6 +18,7 @@ public abstract class AbstractLoan implements Lending {
   private PayingStrategy payingStrategy;
   private LocalDate startMonth;
 
+  @Override
   public String getName() {
     return name;
   }

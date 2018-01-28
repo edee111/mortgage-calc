@@ -10,6 +10,8 @@ import java.time.LocalDate;
  */
 public interface Lending {
 
+  String getName();
+
   String getFullName();
 
   BigDecimal getInterestRate();

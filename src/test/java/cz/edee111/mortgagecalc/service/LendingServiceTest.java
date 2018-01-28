@@ -22,15 +22,23 @@ public class LendingServiceTest {
   @Test
   public void testCalculatePaymentsMortage1() {
     Mortgage mortgage = new Mortgage();
+    mortgage.setName("Mortgage");
     mortgage.setAmount(BigDecimal.valueOf(1000000));
     mortgage.setFulfilmentMonths(12 * 15);
     mortgage.setInterestRate(BigDecimal.valueOf(0.05));
     mortgage.setStartMonth(LocalDate.of(2018, 1, 1));
     mortgage.setPayingStrategy(new MortgagePayingStrategy());
 
-    List<LendingPayment> lendingPayments = new LendingService().calculatePayments(mortgage);
+    LoanVariantDto variant = new LendingService().calculatePayments(mortgage);
 
+    Assertions.assertThat(variant.getBorrowedAmountOf(mortgage.getName())).isEqualTo(BigDecimal.valueOf(1000000));
+    Assertions.assertThat(variant.getTotalBorrowedAmount()).isEqualTo(BigDecimal.valueOf(1000000));
+    Assertions.assertThat(variant.getTotalPayedAmount()).isCloseTo(BigDecimal.valueOf(1423428.52), OFFSET);
+    Assertions.assertThat(variant.getTotalInterest()).isCloseTo(BigDecimal.valueOf(423428.52), OFFSET);
+
+    List<LendingPayment> lendingPayments = variant.getPayments(mortgage.getName());
     Assertions.assertThat(180).isEqualTo(lendingPayments.size());
+
     LendingPayment paym0 = lendingPayments.get(0);
     Assertions.assertThat(paym0.getAmount()).isCloseTo(BigDecimal.valueOf(7907.94), OFFSET);
     Assertions.assertThat(paym0.getPayedAmount()).isCloseTo(BigDecimal.valueOf(3741.27), OFFSET);
@@ -62,13 +70,15 @@ public class LendingServiceTest {
   @Test
   public void testCalculatePaymentsMortage2() {
     Mortgage mortgage = new Mortgage();
+    mortgage.setName("Mortgage");
     mortgage.setAmount(BigDecimal.valueOf(1805900));
     mortgage.setFulfilmentMonths(12 * 25);
     mortgage.setInterestRate(BigDecimal.valueOf(0.0269));
     mortgage.setPayingStrategy(new MortgagePayingStrategy());
     mortgage.setStartMonth(LocalDate.of(2018, 1 ,1));
 
-    List<LendingPayment> lendingPayments = new LendingService().calculatePayments(mortgage);
+    LoanVariantDto variant = new LendingService().calculatePayments(mortgage);
+    List<LendingPayment> lendingPayments = variant.getPayments(mortgage.getName());
 
     Assertions.assertThat(300).isEqualTo(lendingPayments.size());
     LendingPayment paym0 = lendingPayments.get(0);

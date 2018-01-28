@@ -12,7 +12,11 @@ import java.util.List;
  */
 public class LendingService {
 
-  public List<LendingPayment> calculatePayments(Lending lending) {
+  public LoanVariantDto calculatePayments(List<Lending> lending) {
+    return null;
+  }
+
+  public LoanVariantDto calculatePayments(Lending lending) {
     PayingContext context = PayingContext.of(lending);
 
     List<LendingPayment> payments = new ArrayList<>();
@@ -20,7 +24,10 @@ public class LendingService {
       payments.add(context.paySinglePayment());
     }
 
-    return payments;
+    LoanVariantDto res = new LoanVariantDto();
+    res.addAll(lending.getName(), payments);
+
+    return res;
   }
 
 }
