@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mortgage-calc.iml" filepath="$PROJECT_DIR$/.idea/modules/mortgage-calc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mortgage-calc_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mortgage-calc_main.iml" group="mortgage-calc" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mortgage-calc_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mortgage-calc_test.iml" group="mortgage-calc" />
     </modules>
   </component>
 </project>
