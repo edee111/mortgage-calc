@@ -1,0 +1,7 @@
+/.idea/workspace.xml
+/.idea/dataSources.local.xml
+
+/build/
+/out/
+
+.gradle/
