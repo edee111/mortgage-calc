@@ -11,11 +11,25 @@ import java.time.LocalDate;
  */
 public abstract class AbstractLoan implements Lending {
 
+  private String name;
   private BigDecimal interestRate;
   private int fulfilmentMonths;
   private BigDecimal amount;
   private PayingStrategy payingStrategy;
   private LocalDate startMonth;
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public String getFullName() {
+    return String.format("%s, %.2f CZK for %.2f%%", name, amount, interestRate.multiply(BigDecimal.valueOf(100)));
+  }
 
   @Override
   public BigDecimal getInterestRate() {
