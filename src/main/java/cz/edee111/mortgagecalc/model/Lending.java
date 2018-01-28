@@ -16,6 +16,10 @@ public interface Lending {
 
   BigDecimal getInterestRate();
 
+  BigDecimal getInterestRate2();
+
+  boolean isInterestRate2On(BigDecimal fulfilledAmount);
+
   int getFulfilmentMonths();
 
   BigDecimal getAmount();

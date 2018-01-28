@@ -13,6 +13,7 @@ public abstract class AbstractLoan implements Lending {
 
   private String name;
   private BigDecimal interestRate;
+  private BigDecimal interestRate2;
   private int fulfilmentMonths;
   private BigDecimal amount;
   private PayingStrategy payingStrategy;
@@ -89,5 +90,19 @@ public abstract class AbstractLoan implements Lending {
   @Override
   public LocalDate getStartMonth() {
     return startMonth;
+  }
+
+  public void setInterestRate2(BigDecimal interestRate2) {
+    this.interestRate2 = interestRate2;
+  }
+
+  @Override
+  public BigDecimal getInterestRate2() {
+    return interestRate2;
+  }
+
+  @Override
+  public boolean isInterestRate2On(BigDecimal fulfilledAmount) {
+    return getInterestRate2() != null;
   }
 }

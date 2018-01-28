@@ -46,4 +46,35 @@ public class LoanVariantDto {
     return this.payments.get(loanName);
   }
 
+  public String getAllLendingInfo() {
+    StringBuilder sb = new StringBuilder();
+    for (String name : payments.keySet()) {
+      sb.append(getLendingInfo(name)).append("\n");
+    }
+
+    return sb.toString();
+  }
+
+  public String getLendingInfo(String name) {
+    List<LendingPayment> lendingPayments = this.payments.get(name);
+
+    StringBuilder sb = new StringBuilder(name).append("\n========================\n");
+    for (LendingPayment p : lendingPayments) {
+      sb.append(p).append("\n");
+    }
+    sb.append("\n==============\n");
+
+    return sb.toString();
+  }
+
+  public String getTotalStatsInfo() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("=== Summary ===");
+    sb.append("\nTotal borrowed amount:\t").append(getTotalBorrowedAmount());
+    sb.append("\nTotal interest:       \t").append(getTotalInterest());
+    sb.append("\nTotal payed amount:   \t").append(getTotalPayedAmount());
+    sb.append("\n=== Summary end ===\n");
+    return sb.toString();
+  }
+
 }

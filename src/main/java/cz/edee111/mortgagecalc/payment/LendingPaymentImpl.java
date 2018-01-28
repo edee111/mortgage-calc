@@ -7,7 +7,7 @@ import java.time.LocalDate;
 /**
  * @author Eduard Tomek
  */
-public class MortgagePayment implements LendingPayment {
+public class LendingPaymentImpl implements LendingPayment {
 
   private int order;
   private LocalDate month;
@@ -77,13 +77,15 @@ public class MortgagePayment implements LendingPayment {
 
   @Override
   public String toString() {
-    return "MortgagePayment{" +
-        "order=" + order +
-        ",\tmonth=" + month +
-        ",\tamountLeftBefore=" + amountLeftBefore +
-        ",\tpayedAmount=" + payedAmount +
-        ",\tinterestAmount=" + interestAmount +
-        ",\tamountLeftAfter=" + amountLeftAfter +
-        '}';
+    final StringBuilder sb = new StringBuilder("LendingPaymentImpl{");
+    sb.append("\torder=").append(order);
+    sb.append(",\tmonth=").append(month);
+    sb.append(",\tmountLeftBefore=").append(amountLeftBefore);
+    sb.append(",\tamount=").append(getAmount());
+    sb.append(",\tpayedAmount=").append(payedAmount);
+    sb.append(",\tinterestAmount=").append(interestAmount);
+    sb.append(",\tamountLeftAfter=").append(amountLeftAfter);
+    sb.append('}');
+    return sb.toString();
   }
 }

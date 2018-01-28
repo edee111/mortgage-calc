@@ -1,7 +1,7 @@
 package cz.edee111.mortgagecalc.paying;
 
 import cz.edee111.mortgagecalc.payment.LendingPayment;
-import cz.edee111.mortgagecalc.payment.MortgagePayment;
+import cz.edee111.mortgagecalc.payment.LendingPaymentImpl;
 import cz.edee111.mortgagecalc.util.Utils;
 
 import java.math.BigDecimal;
@@ -20,7 +20,7 @@ public class MortgagePayingStrategy implements PayingStrategy {
     BigDecimal amount = context.getLending().getSinglePaymentAmount();
     BigDecimal actualAmount = context.pay(interestForMonth, amount);
 
-    MortgagePayment payment = new MortgagePayment();
+    LendingPaymentImpl payment = new LendingPaymentImpl();
     payment.setInterestAmount(interestForMonth);
     payment.setPayedAmount(actualAmount.subtract(interestForMonth));
     payment.setAmountLeftBefore(amountLeftBefore);

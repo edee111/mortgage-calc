@@ -1,7 +1,10 @@
 package cz.edee111.mortgagecalc.service;
 
+import cz.edee111.mortgagecalc.model.Lending;
 import cz.edee111.mortgagecalc.model.Mortgage;
+import cz.edee111.mortgagecalc.model.WustenrotLoan;
 import cz.edee111.mortgagecalc.paying.MortgagePayingStrategy;
+import cz.edee111.mortgagecalc.paying.WustenrotLoanPayingStrategy;
 import cz.edee111.mortgagecalc.payment.LendingPayment;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.data.Offset;
@@ -9,6 +12,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -111,6 +115,76 @@ public class LendingServiceTest {
     Assertions.assertThat(paym299.getAmountLeftAfter()).isCloseTo(BigDecimal.ZERO, OFFSET);
     Assertions.assertThat(paym299.getOrder()).isEqualTo(300);
     Assertions.assertThat(paym299.getMonth()).isEqualTo(LocalDate.of(2042, 12,1));
+  }
+
+  @Test
+  public void testCalculatePaymentsWustenrotLoan() {
+    WustenrotLoan loan = new WustenrotLoan();
+    loan.setName("Wustenrot loan");
+    loan.setAmount(BigDecimal.valueOf(500000));
+    loan.setFulfilmentMonths(12 * 5);
+    loan.setInterestRate(BigDecimal.valueOf(0.0489));
+    loan.setInterestRate2(BigDecimal.valueOf(0.0299));
+    loan.setLoanFulfiledPercToEnableInterestRate2(BigDecimal.valueOf(0.25)); //25%
+    loan.setPayingStrategy(new WustenrotLoanPayingStrategy());
+    loan.setStartMonth(LocalDate.of(2018, 1 ,1));
+
+    LoanVariantDto variant = new LendingService().calculateVariant(loan);
+    Assertions.assertThat(variant.getTotalPayedAmount()).isCloseTo(BigDecimal.valueOf(550410.77), OFFSET);
+    Assertions.assertThat(variant.getTotalBorrowedAmount()).isCloseTo(BigDecimal.valueOf(500000), OFFSET);
+    Assertions.assertThat(variant.getTotalInterest()).isCloseTo(BigDecimal.valueOf(50410.77), OFFSET);
+
+    List<LendingPayment> lendingPayments = variant.getPayments(loan.getName());
+
+    Assertions.assertThat(59).isEqualTo(lendingPayments.size());
+
+    LendingPayment paym0 = lendingPayments.get(0);
+    Assertions.assertThat(paym0.getAmount()).isCloseTo(BigDecimal.valueOf(9410.44), OFFSET);
+    Assertions.assertThat(paym0.getPayedAmount()).isCloseTo(BigDecimal.valueOf(7372.94), OFFSET);
+    Assertions.assertThat(paym0.getInterestAmount()).isCloseTo(BigDecimal.valueOf(2037.50), OFFSET);
+    Assertions.assertThat(paym0.getAmountLeftBefore()).isCloseTo(BigDecimal.valueOf(500000), OFFSET);
+    Assertions.assertThat(paym0.getAmountLeftAfter()).isCloseTo(BigDecimal.valueOf(492627.06), OFFSET);
+    Assertions.assertThat(paym0.getOrder()).isEqualTo(1);
+    Assertions.assertThat(paym0.getMonth()).isEqualTo(LocalDate.of(2018, 1,1));
+
+    LendingPayment paym58 = lendingPayments.get(58);
+    Assertions.assertThat(paym58.getAmount()).isCloseTo(BigDecimal.valueOf(4605.28), OFFSET);
+    Assertions.assertThat(paym58.getPayedAmount()).isCloseTo(BigDecimal.valueOf(4593.83), OFFSET);
+    Assertions.assertThat(paym58.getInterestAmount()).isCloseTo(BigDecimal.valueOf(11.44), OFFSET);
+    Assertions.assertThat(paym58.getAmountLeftBefore()).isCloseTo(BigDecimal.valueOf(4593.82), OFFSET);
+    Assertions.assertThat(paym58.getAmountLeftAfter()).isCloseTo(BigDecimal.ZERO, OFFSET);
+    Assertions.assertThat(paym58.getOrder()).isEqualTo(59);
+    Assertions.assertThat(paym58.getMonth()).isEqualTo(LocalDate.of(2022, 11,1));
+  }
+
+  @Test
+  public void testCalculatePaymentsCombination() {
+    Mortgage mortgage = new Mortgage();
+    mortgage.setName("Mortgage");
+    mortgage.setAmount(BigDecimal.valueOf(3800000));
+    mortgage.setFulfilmentMonths(12 * 30);
+    mortgage.setInterestRate(BigDecimal.valueOf(0.0249));
+    mortgage.setStartMonth(LocalDate.of(2018, 1, 1));
+    mortgage.setPayingStrategy(new MortgagePayingStrategy());
+
+    WustenrotLoan loan = new WustenrotLoan();
+    loan.setName("Wustenrot loan");
+    loan.setAmount(BigDecimal.valueOf(500000));
+    loan.setFulfilmentMonths(12 * 5);
+    loan.setInterestRate(BigDecimal.valueOf(0.0489));
+    loan.setInterestRate2(BigDecimal.valueOf(0.0299));
+    loan.setLoanFulfiledPercToEnableInterestRate2(BigDecimal.valueOf(0.25)); //25%
+    loan.setPayingStrategy(new WustenrotLoanPayingStrategy());
+    loan.setStartMonth(LocalDate.of(2018, 1 ,1));
+
+    List<Lending> lendings = new ArrayList<>();
+    lendings.add(mortgage);
+    lendings.add(loan);
+
+    LoanVariantDto variant = new LendingService().calculateVariant(lendings);
+
+    System.out.println(variant.getAllLendingInfo());
+    System.out.println(variant.getTotalStatsInfo());
   }
 
 }

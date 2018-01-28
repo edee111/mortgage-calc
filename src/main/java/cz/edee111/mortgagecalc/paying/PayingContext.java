@@ -43,6 +43,10 @@ public class PayingContext {
     return amountLeft;
   }
 
+  public BigDecimal getFulfilledAmount() {
+    return this.lending.getAmount().subtract(amountLeft);
+  }
+
   public int getOrder() {
     return order;
   }
