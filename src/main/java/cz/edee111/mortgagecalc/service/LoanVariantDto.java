@@ -1,5 +1,6 @@
 package cz.edee111.mortgagecalc.service;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.edee111.mortgagecalc.payment.LendingPayment;
 
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ import java.util.Map;
  */
 public class LoanVariantDto {
 
+  @JsonProperty
   private Map<String, List<LendingPayment>> payments = new HashMap<>();
 
   public void addAll(String loanName, List<LendingPayment> payments) {

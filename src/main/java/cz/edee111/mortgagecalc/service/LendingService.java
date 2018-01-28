@@ -3,6 +3,7 @@ package cz.edee111.mortgagecalc.service;
 import cz.edee111.mortgagecalc.model.Lending;
 import cz.edee111.mortgagecalc.paying.PayingContext;
 import cz.edee111.mortgagecalc.payment.LendingPayment;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 /**
  * @author Eduard Tomek
  */
+@Service
 public class LendingService {
 
   public LoanVariantDto calculateVariant(Lending lending) {
