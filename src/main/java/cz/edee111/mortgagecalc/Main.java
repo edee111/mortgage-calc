@@ -8,7 +8,6 @@ import cz.edee111.mortgagecalc.service.LoanVariantDto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 /**
  * @author Eduard Tomek
@@ -24,7 +23,7 @@ public class Main {
     mortgage.setPayingStrategy(new MortgagePayingStrategy());
     mortgage.setStartMonth(LocalDate.of(2018, 1 ,1));
 
-    LoanVariantDto variant = new LendingService().calculatePayments(mortgage);
+    LoanVariantDto variant = new LendingService().calculateVariant(mortgage);
     for (LendingPayment p : variant.getPayments(mortgage.getName())) {
       System.out.println(p);
     }

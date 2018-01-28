@@ -29,7 +29,7 @@ public class LendingServiceTest {
     mortgage.setStartMonth(LocalDate.of(2018, 1, 1));
     mortgage.setPayingStrategy(new MortgagePayingStrategy());
 
-    LoanVariantDto variant = new LendingService().calculatePayments(mortgage);
+    LoanVariantDto variant = new LendingService().calculateVariant(mortgage);
 
     Assertions.assertThat(variant.getBorrowedAmountOf(mortgage.getName())).isEqualTo(BigDecimal.valueOf(1000000));
     Assertions.assertThat(variant.getTotalBorrowedAmount()).isEqualTo(BigDecimal.valueOf(1000000));
@@ -77,7 +77,7 @@ public class LendingServiceTest {
     mortgage.setPayingStrategy(new MortgagePayingStrategy());
     mortgage.setStartMonth(LocalDate.of(2018, 1 ,1));
 
-    LoanVariantDto variant = new LendingService().calculatePayments(mortgage);
+    LoanVariantDto variant = new LendingService().calculateVariant(mortgage);
     List<LendingPayment> lendingPayments = variant.getPayments(mortgage.getName());
 
     Assertions.assertThat(300).isEqualTo(lendingPayments.size());
