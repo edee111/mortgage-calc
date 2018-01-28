@@ -11,8 +11,10 @@ public class MortgagePayment implements LendingPayment {
 
   private int order;
   private LocalDate month;
-  private BigDecimal amount;
-  private BigDecimal amountLeft;
+  private BigDecimal payedAmount;
+  private BigDecimal interestAmount;
+  private BigDecimal amountLeftAfter;
+  private BigDecimal amountLeftBefore;
 
   @Override
   public int getOrder() {
@@ -34,20 +36,43 @@ public class MortgagePayment implements LendingPayment {
 
   @Override
   public BigDecimal getAmount() {
-    return amount;
-  }
-
-  public void setAmount(BigDecimal amount) {
-    this.amount = amount;
+    return payedAmount.add(interestAmount);
   }
 
   @Override
-  public BigDecimal getAmountLeft() {
-    return amountLeft;
+  public BigDecimal getAmountLeftAfter() {
+    return amountLeftAfter;
   }
 
-  public void setAmountLeft(BigDecimal amountLeft) {
-    this.amountLeft = amountLeft;
+  public void setAmountLeftAfter(BigDecimal amountLeftAfter) {
+    this.amountLeftAfter = amountLeftAfter;
+  }
+
+  @Override
+  public BigDecimal getPayedAmount() {
+    return payedAmount;
+  }
+
+  public void setPayedAmount(BigDecimal payedAmount) {
+    this.payedAmount = payedAmount;
+  }
+
+  @Override
+  public BigDecimal getInterestAmount() {
+    return interestAmount;
+  }
+
+  public void setInterestAmount(BigDecimal interestAmount) {
+    this.interestAmount = interestAmount;
+  }
+
+  @Override
+  public BigDecimal getAmountLeftBefore() {
+    return amountLeftBefore;
+  }
+
+  public void setAmountLeftBefore(BigDecimal amountLeftBefore) {
+    this.amountLeftBefore = amountLeftBefore;
   }
 
   @Override
@@ -55,8 +80,10 @@ public class MortgagePayment implements LendingPayment {
     return "MortgagePayment{" +
         "order=" + order +
         ",\tmonth=" + month +
-        ",\tamount=" + amount +
-        ",\tamountLeft=" + amountLeft +
+        ",\tamountLeftBefore=" + amountLeftBefore +
+        ",\tpayedAmount=" + payedAmount +
+        ",\tinterestAmount=" + interestAmount +
+        ",\tamountLeftAfter=" + amountLeftAfter +
         '}';
   }
 }

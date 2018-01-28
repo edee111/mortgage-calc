@@ -13,15 +13,18 @@ public class MortgagePayingStrategy implements PayingStrategy {
 
   @Override
   public LendingPayment makePayment(PayingContext context) {
-    BigDecimal interestForMonth = (context.getAmountLeft().multiply(context.getLending().getInterestRate()))
+    BigDecimal amountLeftBefore = context.getAmountLeft();
+    BigDecimal interestForMonth = (amountLeftBefore.multiply(context.getLending().getInterestRate()))
         .divide(BigDecimal.valueOf(Utils.MONTHS_IN_YEAR), Utils.MC);
 
     BigDecimal amount = context.getLending().getSinglePaymentAmount();
     BigDecimal actualAmount = context.pay(interestForMonth, amount);
 
     MortgagePayment payment = new MortgagePayment();
-    payment.setAmount(actualAmount);
-    payment.setAmountLeft(context.getAmountLeft());
+    payment.setInterestAmount(interestForMonth);
+    payment.setPayedAmount(actualAmount.subtract(interestForMonth));
+    payment.setAmountLeftBefore(amountLeftBefore);
+    payment.setAmountLeftAfter(context.getAmountLeft());
     payment.setOrder(context.getOrder());
     payment.setMonth(context.getMonth());
 

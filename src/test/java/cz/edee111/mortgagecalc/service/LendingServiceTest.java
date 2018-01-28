@@ -33,19 +33,28 @@ public class LendingServiceTest {
     Assertions.assertThat(180).isEqualTo(lendingPayments.size());
     LendingPayment paym0 = lendingPayments.get(0);
     Assertions.assertThat(paym0.getAmount()).isCloseTo(BigDecimal.valueOf(7907.94), OFFSET);
-    Assertions.assertThat(paym0.getAmountLeft()).isCloseTo(BigDecimal.valueOf(996258.73), OFFSET);
+    Assertions.assertThat(paym0.getPayedAmount()).isCloseTo(BigDecimal.valueOf(3741.27), OFFSET);
+    Assertions.assertThat(paym0.getInterestAmount()).isCloseTo(BigDecimal.valueOf(4166.67), OFFSET);
+    Assertions.assertThat(paym0.getAmountLeftBefore()).isCloseTo(BigDecimal.valueOf(1000000), OFFSET);
+    Assertions.assertThat(paym0.getAmountLeftAfter()).isCloseTo(BigDecimal.valueOf(996258.73), OFFSET);
     Assertions.assertThat(paym0.getOrder()).isEqualTo(1);
     Assertions.assertThat(paym0.getMonth()).isEqualTo(LocalDate.of(2018, 1,1));
 
     LendingPayment paym50 = lendingPayments.get(50);
     Assertions.assertThat(paym50.getAmount()).isCloseTo(BigDecimal.valueOf(7907.94), OFFSET);
-    Assertions.assertThat(paym50.getAmountLeft()).isCloseTo(BigDecimal.valueOf(787896.75), OFFSET);
+    Assertions.assertThat(paym50.getPayedAmount()).isCloseTo(BigDecimal.valueOf(4605.84), OFFSET);
+    Assertions.assertThat(paym50.getInterestAmount()).isCloseTo(BigDecimal.valueOf(3302.09), OFFSET);
+    Assertions.assertThat(paym50.getAmountLeftBefore()).isCloseTo(BigDecimal.valueOf(792502.59), OFFSET);
+    Assertions.assertThat(paym50.getAmountLeftAfter()).isCloseTo(BigDecimal.valueOf(787896.75), OFFSET);
     Assertions.assertThat(paym50.getOrder()).isEqualTo(51);
     Assertions.assertThat(paym50.getMonth()).isEqualTo(LocalDate.of(2022, 3,1));
 
     LendingPayment paym179 = lendingPayments.get(179);
     Assertions.assertThat(paym179.getAmount()).isCloseTo(BigDecimal.valueOf(7907.94), OFFSET);
-    Assertions.assertThat(paym179.getAmountLeft()).isCloseTo(BigDecimal.ZERO, OFFSET);
+    Assertions.assertThat(paym179.getPayedAmount()).isCloseTo(BigDecimal.valueOf(7875.12), OFFSET);
+    Assertions.assertThat(paym179.getInterestAmount()).isCloseTo(BigDecimal.valueOf(32.81), OFFSET);
+    Assertions.assertThat(paym179.getAmountLeftBefore()).isCloseTo(BigDecimal.valueOf(7875.12), OFFSET);
+    Assertions.assertThat(paym179.getAmountLeftAfter()).isCloseTo(BigDecimal.ZERO, OFFSET);
     Assertions.assertThat(paym179.getOrder()).isEqualTo(180);
     Assertions.assertThat(paym179.getMonth()).isEqualTo(LocalDate.of(2032, 12,1));
   }
@@ -64,25 +73,32 @@ public class LendingServiceTest {
     Assertions.assertThat(300).isEqualTo(lendingPayments.size());
     LendingPayment paym0 = lendingPayments.get(0);
     Assertions.assertThat(paym0.getAmount()).isCloseTo(BigDecimal.valueOf(8275.45), OFFSET);
-    Assertions.assertThat(paym0.getAmountLeft()).isCloseTo(BigDecimal.valueOf(1801672.77), OFFSET);
+    Assertions.assertThat(paym0.getPayedAmount()).isCloseTo(BigDecimal.valueOf(4227.22), OFFSET);
+    Assertions.assertThat(paym0.getInterestAmount()).isCloseTo(BigDecimal.valueOf(4048.22), OFFSET);
+    Assertions.assertThat(paym0.getAmountLeftBefore()).isCloseTo(BigDecimal.valueOf(1805900), OFFSET);
+    Assertions.assertThat(paym0.getAmountLeftAfter()).isCloseTo(BigDecimal.valueOf(1801672.77), OFFSET);
     Assertions.assertThat(paym0.getOrder()).isEqualTo(1);
     Assertions.assertThat(paym0.getMonth()).isEqualTo(LocalDate.of(2018, 1,1));
 
     LendingPayment paym50 = lendingPayments.get(50);
     Assertions.assertThat(paym50.getAmount()).isCloseTo(BigDecimal.valueOf(8275.45), OFFSET);
-    Assertions.assertThat(paym50.getAmountLeft()).isCloseTo(BigDecimal.valueOf(1577774.93), OFFSET);
+    Assertions.assertThat(paym50.getAmountLeftBefore()).isCloseTo(BigDecimal.valueOf(1582502.94), OFFSET);
+    Assertions.assertThat(paym50.getAmountLeftAfter()).isCloseTo(BigDecimal.valueOf(1577774.93), OFFSET);
     Assertions.assertThat(paym50.getOrder()).isEqualTo(51);
     Assertions.assertThat(paym50.getMonth()).isEqualTo(LocalDate.of(2022, 3,1));
 
     LendingPayment paym179 = lendingPayments.get(179);
     Assertions.assertThat(paym179.getAmount()).isCloseTo(BigDecimal.valueOf(8275.45), OFFSET);
-    Assertions.assertThat(paym179.getAmountLeft()).isCloseTo(BigDecimal.valueOf(869851.64), OFFSET);
+    Assertions.assertThat(paym179.getAmountLeftBefore()).isCloseTo(BigDecimal.valueOf(876163.03), OFFSET);
+    Assertions.assertThat(paym179.getAmountLeftAfter()).isCloseTo(BigDecimal.valueOf(869851.64), OFFSET);
     Assertions.assertThat(paym179.getOrder()).isEqualTo(180);
     Assertions.assertThat(paym179.getMonth()).isEqualTo(LocalDate.of(2032, 12,1));
 
     LendingPayment paym299 = lendingPayments.get(299);
     Assertions.assertThat(paym299.getAmount()).isCloseTo(BigDecimal.valueOf(8275.45), OFFSET);
-    Assertions.assertThat(paym299.getAmountLeft()).isCloseTo(BigDecimal.ZERO, OFFSET);
+    Assertions.assertThat(paym299.getPayedAmount()).isCloseTo(BigDecimal.valueOf(8256.94), OFFSET);
+    Assertions.assertThat(paym299.getAmountLeftBefore()).isCloseTo(BigDecimal.valueOf(8256.94), OFFSET);
+    Assertions.assertThat(paym299.getAmountLeftAfter()).isCloseTo(BigDecimal.ZERO, OFFSET);
     Assertions.assertThat(paym299.getOrder()).isEqualTo(300);
     Assertions.assertThat(paym299.getMonth()).isEqualTo(LocalDate.of(2042, 12,1));
   }

@@ -7,11 +7,14 @@ import java.time.LocalDate;
  * @author Eduard Tomek
  */
 public interface LendingPayment {
-  int getOrder();
 
+  int getOrder();
   LocalDate getMonth();
 
   BigDecimal getAmount();
+  BigDecimal getPayedAmount();
+  BigDecimal getInterestAmount();
 
-  BigDecimal getAmountLeft();
+  BigDecimal getAmountLeftBefore();
+  BigDecimal getAmountLeftAfter();
 }
