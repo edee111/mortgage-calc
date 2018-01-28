@@ -12,6 +12,7 @@ public class MortgagePayingStrategy implements PayingStrategy {
 
   @Override
   public LendingPayment makePayment(PayingContext context) {
+
     BigDecimal amount = context.getLending().getSinglePaymentAmount();
     BigDecimal actualAmount = context.pay(amount);
 
