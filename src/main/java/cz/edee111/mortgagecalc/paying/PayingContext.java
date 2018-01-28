@@ -12,6 +12,8 @@ import java.time.LocalDate;
  */
 public class PayingContext {
 
+  private static final BigDecimal EPSILON = BigDecimal.valueOf(0.0001);
+
   private int order;
   private LocalDate month;
   private Lending lending;
@@ -73,6 +75,6 @@ public class PayingContext {
   }
 
   public boolean isFullyPayed() {
-    return this.amountLeft.compareTo(BigDecimal.ZERO) <= 0;
+    return this.amountLeft.abs().compareTo(EPSILON) <= 0;
   }
 }

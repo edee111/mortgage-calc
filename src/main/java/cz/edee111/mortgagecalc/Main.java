@@ -16,9 +16,9 @@ public class Main {
 
   public static void main(String[] args) {
     Mortgage mortgage = new Mortgage();
-    mortgage.setAmount(BigDecimal.valueOf(1000000));
-    mortgage.setFulfilmentMonths(12 * 15);
-    mortgage.setInterestRate(BigDecimal.valueOf(0.05));
+    mortgage.setAmount(BigDecimal.valueOf(1805900));
+    mortgage.setFulfilmentMonths(12 * 25);
+    mortgage.setInterestRate(BigDecimal.valueOf(0.0269));
     mortgage.setPayingStrategy(new MortgagePayingStrategy());
     mortgage.setStartMonth(LocalDate.of(2018, 1 ,1));
 
