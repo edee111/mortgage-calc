@@ -25,9 +25,11 @@ public class VariantsTest {
   public void testVariants() {
     LoanVariantDto variant1 = lendingService.calculateVariant(getLendings1());
     LoanVariantDto variant2 = lendingService.calculateVariant(getLendings2());
+    LoanVariantDto variantSporka = lendingService.calculateVariant(getLendingsSporka());
 
     printVariant("80%", variant1);
     printVariant("90%", variant2);
+    printVariant("sporka 90%", variantSporka);
   }
 
   private void printVariant(String name, LoanVariantDto variant) {
@@ -50,9 +52,9 @@ public class VariantsTest {
     loan.setName("Wustenrot loan");
     loan.setAmount(BigDecimal.valueOf(700000));
     loan.setFulfilmentMonths(12 * 6);
-    loan.setInterestRate(BigDecimal.valueOf(0.0489));
-    loan.setInterestRate2(BigDecimal.valueOf(0.0299));
-    loan.setLoanFulfiledPercToEnableInterestRate2(BigDecimal.valueOf(0.25)); //25%
+    loan.setInterestRate(BigDecimal.valueOf(0.0589));
+    loan.setInterestRate2(BigDecimal.valueOf(0.035));
+    loan.setLoanFulfiledPercToEnableInterestRate2(BigDecimal.valueOf(0.40)); //25%
     loan.setPayingStrategy(new WustenrotLoanPayingStrategy());
     loan.setStartMonth(LocalDate.of(2018, 1 ,1));
 
@@ -76,9 +78,9 @@ public class VariantsTest {
     loan.setName("Wustenrot loan");
     loan.setAmount(BigDecimal.valueOf(300000));
     loan.setFulfilmentMonths(12 * 6);
-    loan.setInterestRate(BigDecimal.valueOf(0.0489));
-    loan.setInterestRate2(BigDecimal.valueOf(0.0299));
-    loan.setLoanFulfiledPercToEnableInterestRate2(BigDecimal.valueOf(0.25)); //25%
+    loan.setInterestRate(BigDecimal.valueOf(0.0589));
+    loan.setInterestRate2(BigDecimal.valueOf(0.035));
+    loan.setLoanFulfiledPercToEnableInterestRate2(BigDecimal.valueOf(0.4)); //25%
     loan.setPayingStrategy(new WustenrotLoanPayingStrategy());
     loan.setStartMonth(LocalDate.of(2018, 1 ,1));
 
@@ -88,4 +90,22 @@ public class VariantsTest {
 
     return lendings;
   }
+
+
+  private List<Lending> getLendingsSporka() {
+    Mortgage mortgage = new Mortgage();
+    mortgage.setName("Mortgage");
+    mortgage.setAmount(BigDecimal.valueOf(3942000));
+    mortgage.setFulfilmentMonths(12 * 30);
+    mortgage.setInterestRate(BigDecimal.valueOf(0.0239));
+    mortgage.setStartMonth(LocalDate.of(2018, 1, 1));
+    mortgage.setPayingStrategy(new MortgagePayingStrategy());
+
+
+    List<Lending> lendings = new ArrayList<>();
+    lendings.add(mortgage);
+
+    return lendings;
+  }
+
 }
