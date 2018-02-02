@@ -26,10 +26,12 @@ public class VariantsTest {
     LoanVariantDto variant1 = lendingService.calculateVariant(getLendings1());
     LoanVariantDto variant2 = lendingService.calculateVariant(getLendings2());
     LoanVariantDto variantSporka = lendingService.calculateVariant(getLendingsSporka());
+    LoanVariantDto variantLiska = lendingService.calculateVariant(getLendingsLiska());
 
     printVariant("80%", variant1);
     printVariant("90%", variant2);
     printVariant("sporka 90%", variantSporka);
+    printVariant("liska 90%", variantLiska);
   }
 
   private void printVariant(String name, LoanVariantDto variant) {
@@ -98,6 +100,22 @@ public class VariantsTest {
     mortgage.setAmount(BigDecimal.valueOf(3942000));
     mortgage.setFulfilmentMonths(12 * 30);
     mortgage.setInterestRate(BigDecimal.valueOf(0.0239));
+    mortgage.setStartMonth(LocalDate.of(2018, 1, 1));
+    mortgage.setPayingStrategy(new MortgagePayingStrategy());
+
+
+    List<Lending> lendings = new ArrayList<>();
+    lendings.add(mortgage);
+
+    return lendings;
+  }
+
+  private List<Lending> getLendingsLiska() {
+    Mortgage mortgage = new Mortgage();
+    mortgage.setName("Mortgage");
+    mortgage.setAmount(BigDecimal.valueOf(4050000));
+    mortgage.setFulfilmentMonths(12 * 30);
+    mortgage.setInterestRate(BigDecimal.valueOf(0.019));
     mortgage.setStartMonth(LocalDate.of(2018, 1, 1));
     mortgage.setPayingStrategy(new MortgagePayingStrategy());
 

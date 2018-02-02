@@ -13,6 +13,7 @@ public class LendingPaymentImpl implements LendingPayment {
   private LocalDate month;
   private BigDecimal payedAmount;
   private BigDecimal interestAmount;
+  private BigDecimal amount;
   private BigDecimal amountLeftAfter;
   private BigDecimal amountLeftBefore;
 
@@ -36,7 +37,13 @@ public class LendingPaymentImpl implements LendingPayment {
 
   @Override
   public BigDecimal getAmount() {
-    return payedAmount.add(interestAmount);
+    return amount;
+  }
+
+  public void setAmountIfPossible() {
+    if (this.payedAmount != null && this.interestAmount != null) {
+      this.amount =  payedAmount.add(interestAmount);
+    }
   }
 
   @Override
@@ -55,6 +62,7 @@ public class LendingPaymentImpl implements LendingPayment {
 
   public void setPayedAmount(BigDecimal payedAmount) {
     this.payedAmount = payedAmount;
+    setAmountIfPossible();
   }
 
   @Override
@@ -64,6 +72,7 @@ public class LendingPaymentImpl implements LendingPayment {
 
   public void setInterestAmount(BigDecimal interestAmount) {
     this.interestAmount = interestAmount;
+    setAmountIfPossible();
   }
 
   @Override
